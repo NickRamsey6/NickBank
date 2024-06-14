@@ -1,15 +1,20 @@
-﻿using BankingLib;
+﻿// Use the BankingLib namespace which has our CardHolder class and its methods 
+using BankingLib;
 
+// Create a list of existing cardHolders
 List<CardHolder> cardHolders = new List<CardHolder>();
 cardHolders.Add(new CardHolder(1111, "Nick", "Lname", 99.99));
 cardHolders.Add(new CardHolder( 2222, "Bob", "Lname", 599.99));
 
 
-
+// Welcome user and enter a pin
 Console.WriteLine("Welcome to Banking App!");
 Console.WriteLine("Please Enter your PIN: ");
+
+// Create a placeholder CardHolder and attempt to set the currentAccount to an existing CardHolder if the pin provided matches
 CardHolder currentAccount;
 
+// Will loop infinitely unless a matching pin is provided
 while (true)
 {
     try
@@ -33,17 +38,18 @@ while (true)
 
 
 
-
+// Greet the CardHolder and display the menu 
 Console.WriteLine($"Hello {currentAccount.CardHolderFname}!");
 Console.WriteLine("How can we help you today?");
 
 string[] menuOptions = { "View Balance", "Withdraw", "Deposit" };
-
 for (int i = 0; i < menuOptions.Length; i++)
 {
     Console.WriteLine($"{i + 1} {menuOptions[i]}");
 }
 
+
+// Take in the CardHolder menuOption and run that Class Method
 string? menuSelection = Console.ReadLine();
 switch (menuSelection)
 {
@@ -65,7 +71,6 @@ switch (menuSelection)
         double newWithdrawnBalance = currentAccount.WithdrawFunds(currentAccount.Balance, withdrawAmount);
         Console.WriteLine($"Your new balance is {newWithdrawnBalance:C}");
         break;
-
 
     case "3":
         Console.Clear();
