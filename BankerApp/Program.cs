@@ -50,6 +50,7 @@ for (int i = 0; i < menuOptions.Length; i++)
 
 
 // Take in the CardHolder menuOption and run that Class Method
+// TO-DO set up options as an enum?
 string? menuSelection = Console.ReadLine();
 switch (menuSelection)
 {
@@ -81,5 +82,5 @@ switch (menuSelection)
         Console.WriteLine($"Your new balance is {newDepositedBalance:C}");
         break;
 
-
+        // TO-DO add a default case to prompt the user to select again
 }
