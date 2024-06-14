@@ -8,12 +8,12 @@ namespace BankingLib
         public string CardHolderLname { get; set; } = cardHolderLname;
         public double Balance { get; set; } = balance;
 
-        public double DepositFunds(double depositAmount, double balance)
+        public double DepositFunds(double balance, double depositAmount)
         {
-            return depositAmount + balance;
+            return balance + depositAmount;
         }
 
-        public double WithdrawFunds(double withdrawAmount, double balance)
+        public double WithdrawFunds(double balance, double withdrawAmount)
         {
 
             return balance - withdrawAmount;

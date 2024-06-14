@@ -4,17 +4,37 @@ List<CardHolder> cardHolders = new List<CardHolder>();
 cardHolders.Add(new CardHolder(1111, "Nick", "Lname", 99.99));
 cardHolders.Add(new CardHolder( 2222, "Bob", "Lname", 599.99));
 
+
+
 Console.WriteLine("Welcome to Banking App!");
 Console.WriteLine("Please Enter your PIN: ");
-string enteredPin = Console.ReadLine()!;
+CardHolder currentAccount;
 
-if (string.IsNullOrEmpty(enteredPin)) return;
+while (true)
+{
+    try
+    {
+        int pinInt = int.Parse(Console.ReadLine()!);
+        currentAccount = cardHolders.FirstOrDefault(a => a.Pin == pinInt)!;
+        if (currentAccount != null)
+        {
+            break;
+        }
+        else
+        {
+            Console.WriteLine("Invalid pin. Try again.");
+        }
+    }
+    catch
+    {
+        Console.WriteLine("Invalid pin. Try again.");
+    }
+}
 
-int pinInt = int.Parse(enteredPin);
-var accessedAccount = cardHolders.FirstOrDefault(cardHolders => cardHolders.Pin == pinInt)!;
 
 
-Console.WriteLine($"Hello {accessedAccount.CardHolderFname}!");
+
+Console.WriteLine($"Hello {currentAccount.CardHolderFname}!");
 Console.WriteLine("How can we help you today?");
 
 string[] menuOptions = { "View Balance", "Withdraw", "Deposit" };
@@ -29,7 +49,7 @@ switch (menuSelection)
 {
     case "1":
         Console.Clear();
-        Console.WriteLine($"Your current balance is ${accessedAccount.Balance}");
+        Console.WriteLine($"Your current balance is ${currentAccount.Balance}");
         break;
 
     case "2":
@@ -37,12 +57,12 @@ switch (menuSelection)
         Console.WriteLine("Please enter the amount you would like to withdraw:");
         string withdrawString = Console.ReadLine()!;
         double withdrawAmount = double.Parse(withdrawString);
-        if (withdrawAmount > accessedAccount.Balance)
+        if (withdrawAmount > currentAccount.Balance)
         {
             throw new ArgumentException(
-                $"You have insufficent funds to withdraw ${withdrawAmount}! Your current balance is {accessedAccount.Balance}");
+                $"You have insufficent funds to withdraw ${withdrawAmount}! Your current balance is {currentAccount.Balance}");
         }
-        double newWithdrawnBalance = accessedAccount.WithdrawFunds(withdrawAmount, accessedAccount.Balance);
+        double newWithdrawnBalance = currentAccount.WithdrawFunds(currentAccount.Balance, withdrawAmount);
         Console.WriteLine($"Your new balance is {newWithdrawnBalance:C}");
         break;
 
@@ -52,18 +72,9 @@ switch (menuSelection)
         Console.WriteLine("Please enter the amount you would like to deposit:");
         string depositString = Console.ReadLine()!;
         double depositAmount = double.Parse(depositString);
-        double newDepositedBalance = accessedAccount.DepositFunds(depositAmount, accessedAccount.Balance);
+        double newDepositedBalance = currentAccount.DepositFunds(currentAccount.Balance, depositAmount);
         Console.WriteLine($"Your new balance is {newDepositedBalance:C}");
         break;
 
 
 }
-
-
-
-
-//if (accessedAccount == null)
-//{
-//    Console.WriteLine($"Sorry we could not find an account for the pin {enteredPin}");
-//    Console.WriteLine("Please Enter your pin: ");
-//};
